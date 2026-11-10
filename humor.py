@@ -43,7 +43,7 @@ SUAVIZACAO = 0.3          # 0 a 1: menor = notas mais estáveis (e mais lentas)
 LIMIAR_SORRISO = 0.5      # sorriso acima disso = FELIZ
 LIMIAR_BOCA = 0.3         # boca aberta...
 LIMIAR_SOBRANCELHA = 0.3  # ...com sobrancelhas para cima = SURPRESO
-LIMIAR_TRISTE = 0.2       # cantos da boca para baixo = TRISTE (a IA dá notas baixas aqui)
+LIMIAR_TRISTE = 0.1      # cantos da boca para baixo = TRISTE (a IA dá notas baixas aqui)
 LIMIAR_BRAVO = 0.4        # sobrancelhas franzidas = BRAVO/CONFUSO
 LIMIAR_OLHOS = 0.5        # olhos fechando = CANSADO
 LIMIAR_BOCEJO = 0.6       # boca muito aberta sem surpresa = bocejo = CANSADO
