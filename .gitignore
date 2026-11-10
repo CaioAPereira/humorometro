@@ -1,0 +1,9 @@
+__pycache__/
+.venv/
+venv/
+# Modelo da IA: o programa baixa sozinho na primeira execução
+face_landmarker.task
+# Planilhas geradas ao sair
+humor_*.csv
+# Anotações locais (memórias do Claude): não versionar
+.claude/
