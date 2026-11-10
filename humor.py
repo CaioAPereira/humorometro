@@ -7,7 +7,8 @@ transformam essas notas em um humor, com emoji, barras e gráfico.
 
   😄 FELIZ          sorriso alto
   😮 SURPRESO       boca aberta + sobrancelhas para cima
-  😠 BRAVO/CONFUSO  sobrancelhas franzidas (ou boca triste)
+  😢 TRISTE         cantos da boca para baixo
+  😠 BRAVO/CONFUSO  sobrancelhas franzidas
   😴 CANSADO        olhos fechando ou bocejo
   😐 NEUTRO         nada disso
 
@@ -42,6 +43,7 @@ SUAVIZACAO = 0.3          # 0 a 1: menor = notas mais estáveis (e mais lentas)
 LIMIAR_SORRISO = 0.5      # sorriso acima disso = FELIZ
 LIMIAR_BOCA = 0.3         # boca aberta...
 LIMIAR_SOBRANCELHA = 0.3  # ...com sobrancelhas para cima = SURPRESO
+LIMIAR_TRISTE = 0.2       # cantos da boca para baixo = TRISTE (a IA dá notas baixas aqui)
 LIMIAR_BRAVO = 0.4        # sobrancelhas franzidas = BRAVO/CONFUSO
 LIMIAR_OLHOS = 0.5        # olhos fechando = CANSADO
 LIMIAR_BOCEJO = 0.6       # boca muito aberta sem surpresa = bocejo = CANSADO
@@ -170,8 +172,8 @@ def desenhar_barras(frame, notas):
 # SEÇÃO 5 - Regras: das notas para o humor
 # ==========================================================================
 # Cores em BGR (Azul, Verde, Vermelho). O cv2.putText não escreve acentos.
-CORES = {"FELIZ": (0, 220, 120), "SURPRESO": (255, 200, 0), "BRAVO/CONFUSO": (60, 60, 255),
-         "CANSADO": (200, 120, 160), "NEUTRO": (200, 200, 200)}
+CORES = {"FELIZ": (0, 220, 120), "SURPRESO": (255, 200, 0), "TRISTE": (230, 140, 40),
+         "BRAVO/CONFUSO": (60, 60, 255), "CANSADO": (200, 120, 160), "NEUTRO": (200, 200, 200)}
 
 
 def classificar_humor(notas):
@@ -180,7 +182,9 @@ def classificar_humor(notas):
         return "FELIZ"
     if notas["boca_aberta"] > LIMIAR_BOCA and notas["sobrancelha_cima"] > LIMIAR_SOBRANCELHA:
         return "SURPRESO"
-    if notas["sobrancelha_baixo"] > LIMIAR_BRAVO or notas["boca_triste"] > LIMIAR_BRAVO:
+    if notas["boca_triste"] > LIMIAR_TRISTE:
+        return "TRISTE"
+    if notas["sobrancelha_baixo"] > LIMIAR_BRAVO:
         return "BRAVO/CONFUSO"
     if notas["olhos_fechando"] > LIMIAR_OLHOS or notas["boca_aberta"] > LIMIAR_BOCEJO:
         return "CANSADO"
@@ -214,6 +218,8 @@ def desenhar_emoji(frame, humor, pontos):
     if humor == "BRAVO/CONFUSO":                                     # sobrancelhas em V
         cv2.line(frame, (x - r // 2, y - r // 2), (x - r // 8, y - r // 3), preto, 3)
         cv2.line(frame, (x + r // 2, y - r // 2), (x + r // 8, y - r // 3), preto, 3)
+    if humor == "TRISTE":                                            # lágrima azul
+        cv2.ellipse(frame, (x - r // 3, y + r // 8), (r // 10, r // 6), 0, 0, 360, (255, 150, 50), -1)
     if humor == "CANSADO":
         cv2.putText(frame, "z", (x + r, y - r // 2), cv2.FONT_HERSHEY_DUPLEX, r / 30, (255, 255, 255), 2)
 
@@ -221,7 +227,7 @@ def desenhar_emoji(frame, humor, pontos):
         cv2.ellipse(frame, (x, y + r // 6), (r // 2, r // 3), 0, 0, 180, preto, 3)    # arco sorrindo
     elif humor == "SURPRESO":
         cv2.ellipse(frame, (x, y + r // 3), (r // 6, r // 4), 0, 0, 360, preto, -1)   # boca em "O"
-    elif humor == "BRAVO/CONFUSO":
+    elif humor in ("BRAVO/CONFUSO", "TRISTE"):
         cv2.ellipse(frame, (x, y + r // 2), (r // 3, r // 5), 0, 180, 360, preto, 3)  # arco triste
     else:
         cv2.line(frame, (x - r // 3, y + r // 3), (x + r // 3, y + r // 3), preto, 3)  # boca reta
@@ -240,7 +246,8 @@ import csv
 from collections import Counter, deque
 from datetime import datetime
 
-PONTOS_HUMOR = {"FELIZ": 1.0, "SURPRESO": 0.8, "NEUTRO": 0.5, "BRAVO/CONFUSO": 0.25, "CANSADO": 0.0}
+PONTOS_HUMOR = {"FELIZ": 1.0, "SURPRESO": 0.8, "NEUTRO": 0.5, "BRAVO/CONFUSO": 0.25, "TRISTE": 0.15,
+                "CANSADO": 0.0}
 
 
 def humor_da_sala(humores):

@@ -9,8 +9,8 @@ na ordem do arquivo. A **Parte 2** (Seções 7 a 9) é só para mostrar no final
 
 | Parte | Linhas de código | Linhas no arquivo (com comentários) |
 |---|---|---|
-| Parte 1: núcleo (codar junto) | 141 | ~235 |
-| Parte 2: extras (só mostrar) | 93 | ~135 |
+| Parte 1: núcleo (codar junto) | 146 | ~240 |
+| Parte 2: extras (só mostrar) | 94 | ~135 |
 
 ## ✅ Antes da aula
 - [ ] Pedir que a turma instale tudo antes (seção "Instalação" do README)
@@ -34,7 +34,7 @@ surpresa, franza a testa, feche os olhos. Chame 2 ou 3 colegas para o "humor da 
 - Fluxo: `câmera → IA acha o rosto → notas → regras → humor (emoji)`
 - **A pergunta da aula:** ler um sorriso é ler felicidade? (Volte a ela no final)
 
-## 10–13 min · ✍️ Seção 1: importações e configurações (15 linhas)
+## 10–13 min · ✍️ Seção 1: importações e configurações (16 linhas)
 - Para que serve cada biblioteca
 - Configurações no topo: dá para ajustar sem mexer na lógica
 - Os limiares são os "botões de calibrar" das regras da Seção 5
@@ -61,13 +61,14 @@ surpresa, franza a testa, feche os olhos. Chame 2 ou 3 colegas para o "humor da 
   (sem isso o humor fica "piscando"). Pergunte: o que acontece com `SUAVIZACAO = 1`?
 - ▶️ **Rodar:** as barras sobem e descem com as caretas. Deixe a turma brincar 1 minuto
 
-## 37–44 min · ✍️ Seção 5: regras de humor (20 linhas)
+## 37–44 min · ✍️ Seção 5: regras de humor (22 linhas)
 - Uma cadeia de `if`: **a ordem importa**. Pergunte: por que SURPRESO vem antes de CANSADO?
   (Resposta: os dois abrem a boca; a sobrancelha é o que separa surpresa de bocejo)
+- TRISTE usa `mouthFrown`, que a IA pontua baixo: por isso o limiar dele é só 0,2
 - Os limiares vieram de olhar as barras: é assim que se calibra
 - ▶️ **Rodar:** o nome do humor aparece embaixo do queixo, colorido
 
-## 44–52 min · ✍️ Seção 6: emoji em cima da cabeça (27 linhas)
+## 44–52 min · ✍️ Seção 6: emoji em cima da cabeça (29 linhas)
 - O `cv2.putText` não desenha emoji (nem acentos), então desenhamos com **círculos,
   linhas e elipses**: o arco da boca muda de 0–180° (sorriso) para 180–360° (triste)
 - O tamanho segue a largura do rosto (pontos 234 e 454): longe = emoji pequeno
