@@ -9,7 +9,8 @@ notas em um humor, com emoji, barras, termômetro da sala e gráfico.
 |---|---|
 | 😄 Sorriso | FELIZ |
 | 😮 Boca aberta + sobrancelhas para cima | SURPRESO |
-| 😠 Sobrancelhas franzidas (ou boca triste) | BRAVO/CONFUSO |
+| 😢 Cantos da boca para baixo | TRISTE |
+| 😠 Sobrancelhas franzidas | BRAVO/CONFUSO |
 | 😴 Olhos fechando ou bocejo | CANSADO |
 | 😐 Nada disso | NEUTRO |
 
@@ -64,5 +65,6 @@ que as regras usam. Se um humor dispara fácil ou difícil demais, mude o limiar
 | Fica FELIZ com qualquer sorrisinho | Aumente `LIMIAR_SORRISO` |
 | Fica CANSADO à toa | Aumente `LIMIAR_OLHOS` |
 | Fica BRAVO/CONFUSO à toa | Aumente `LIMIAR_BRAVO` |
+| TRISTE nunca aparece (ou aparece demais) | Diminua (ou aumente) `LIMIAR_TRISTE` |
 | Humor muda rápido demais | Diminua `SUAVIZACAO` |
 | Muito lento (FPS baixo) | Diminua `NUM_ROSTOS` |
