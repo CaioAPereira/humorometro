@@ -1,0 +1,3 @@
+# Versão testada (Python 3.9 a 3.14). O OpenCV e o NumPy vêm junto com o MediaPipe:
+# NÃO instale "opencv-python" separado, senão os dois pacotes entram em conflito.
+mediapipe==1.2.2
